@@ -29,6 +29,14 @@ A modern, responsive full-stack web application to **track personal expenses**. 
 
 ## 🧠 Tech Stack
 
+![License](https://img.shields.io/github/license/KishanThorat111/personal-finance-visualizer?style=flat-square)
+![Next.js](https://img.shields.io/badge/Built%20with-Next.js-000?logo=nextdotjs&style=flat-square)
+![Tailwind CSS](https://img.shields.io/badge/UI-TailwindCSS-06B6D4?logo=tailwindcss&logoColor=white&style=flat-square)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB-4EA94B?logo=mongodb&logoColor=white&style=flat-square)
+![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel&style=flat-square)
+![Stage](https://img.shields.io/badge/Stage-1-green?style=flat-square)
+
+
 | Tech                | Usage                                    |
 | ------------------- | ---------------------------------------- |
 | **Next.js**         | Full-stack React framework               |
@@ -42,18 +50,6 @@ A modern, responsive full-stack web application to **track personal expenses**. 
 | **Sonner**          | Toast notifications                      |
 
 ---
-
-
-# 💸 Personal Finance Visualizer
-
-![License](https://img.shields.io/github/license/KishanThorat111/personal-finance-visualizer?style=flat-square)
-![Next.js](https://img.shields.io/badge/Built%20with-Next.js-000?logo=nextdotjs&style=flat-square)
-![Tailwind CSS](https://img.shields.io/badge/UI-TailwindCSS-06B6D4?logo=tailwindcss&logoColor=white&style=flat-square)
-![MongoDB](https://img.shields.io/badge/Database-MongoDB-4EA94B?logo=mongodb&logoColor=white&style=flat-square)
-![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel&style=flat-square)
-![Stage](https://img.shields.io/badge/Stage-1-green?style=flat-square)
-
-A modern, responsive full-stack web application to **track personal expenses**. Built with **Next.js 14**, **MongoDB**, **Tailwind CSS**, **shadcn/ui**, **Recharts**, and animated with **Framer Motion** — it offers a sleek interface to manage transactions and visualize spending.
 
 
 ### 🧾 Add & Edit Transactions
