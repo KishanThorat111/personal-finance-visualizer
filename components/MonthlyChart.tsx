@@ -43,8 +43,10 @@ export default function MonthlyChart({ data }: { data: any[] }) {
         map.set(d, { amount: 0, descriptions: [] });
       }
       const entry = map.get(d)!;
+      // entry.amount += tx.amount;
+      // entry.descriptions.push(tx.description);
       entry.amount += tx.amount;
-      entry.descriptions.push(tx.description);
+      entry.descriptions.push(`${tx.description} - ₹${tx.amount}`);
     }
     return days.map(day => ({
       ...day,
@@ -65,7 +67,7 @@ export default function MonthlyChart({ data }: { data: any[] }) {
           {item.descriptions.length > 0 && (
             <ul className="mt-2 list-disc list-inside text-slate-600 dark:text-slate-300">
               {item.descriptions.map((desc: string, idx: number) => (
-                <li key={idx}>{desc}</li>
+                <li key={idx} className="text-sm leading-snug">{desc}</li>
               ))}
             </ul>
           )}

@@ -30,6 +30,7 @@
 // }
 
 
+// app/api/transactions/[id]/route.ts
 
 import { connectDB } from '@/lib/mongo';
 import Transaction from '@/models/Transaction';
