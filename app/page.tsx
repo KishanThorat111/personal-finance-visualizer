@@ -1,103 +1,178 @@
-import Image from "next/image";
+
+// app/page.tsx
+
+
+
+'use client';
+
+import TransactionForm from '@/components/TransactionForm';
+import TransactionList from '@/components/TransactionList';
+import MonthlyChart from '@/components/MonthlyChart';
+import { useEffect, useRef, useState } from 'react';
+import { Toaster, toast } from '@/components/ui/toaster';
+import { Ban, AlertTriangle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [editing, setEditing] = useState<any>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const fetchData = async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await fetch('/api/transactions');
+      const json = await res.json();
+      setTransactions(json);
+    } catch (err) {
+      setError(true);
+      toast('Error fetching transactions');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const addTransaction = async (data: any) => {
+    try {
+      const res = await fetch('/api/transactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        toast('Transaction added successfully');
+        fetchData();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      toast('Failed to add transaction');
+    }
+  };
+
+  const updateTransaction = async (data: any) => {
+    if (!editing) return;
+    try {
+      const res = await fetch(`/api/transactions/${editing._id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        toast('Transaction updated');
+        fetchData();
+        setEditing(null);
+      } else {
+        throw new Error();
+      }
+    } catch {
+      toast('Failed to update transaction');
+    }
+  };
+
+  const deleteTransaction = async (id: string) => {
+    try {
+      const res = await fetch(`/api/transactions/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        toast('Transaction deleted');
+        fetchData();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      toast('Failed to delete transaction');
+    }
+  };
+
+  const handleEdit = (tx: any) => {
+    setEditing(tx);
+    setTimeout(() => {
+      window.scrollTo({
+        top: formRef.current?.offsetTop! - 150,
+        behavior: 'smooth',
+      });
+    }, 100);
+  };
+
+  const cancelEdit = () => setEditing(null);
+
+  return (
+    <main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-200 dark:from-slate-900 dark:to-slate-800 text-gray-900 dark:text-white p-4 sm:p-6 space-y-10 font-sans">
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="sticky top-0 z-10 bg-white/70 dark:bg-slate-900/70 backdrop-blur border-b border-slate-300 dark:border-slate-700 shadow-xl py-4 px-4 sm:px-6 rounded-xl"
+      >
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-center tracking-tight drop-shadow-xl font-display">💸 Personal Finance Visualizer</h1>
+      </motion.header>
+
+      <section className="max-w-4xl mx-auto px-2 sm:px-0" ref={formRef}>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="rounded-3xl shadow-2xl"
+        >
+          <TransactionForm
+            onSubmit={addTransaction}
+            onUpdate={updateTransaction}
+            editing={editing}
+            cancelEdit={cancelEdit}
+          />
+        </motion.div>
+      </section>
+
+      {loading ? (
+        <div className="flex justify-center items-center py-16 animate-pulse">
+          <p className="text-lg text-gray-500 font-medium">Fetching your transactions...</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      ) : error ? (
+        <motion.div className="bg-red-50 dark:bg-red-900/30 rounded-xl shadow-md p-6 flex flex-col items-center gap-2 text-red-600 dark:text-red-300 font-medium">
+          <AlertTriangle className="w-8 h-8" />
+          <p className="text-lg font-semibold">Failed to load transactions</p>
+        </motion.div>
+      ) : transactions.length === 0 ? (
+        <motion.div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl shadow-md p-6 flex flex-col items-center gap-2 text-slate-600 dark:text-slate-300 font-medium">
+          <Ban className="w-8 h-8" />
+          <p className="text-lg font-semibold">No transactions yet</p>
+        </motion.div>
+      ) : (
+        <section className="grid grid-cols-1 xl:grid-cols-2 gap-6 px-2 sm:px-0">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="bg-white/90 dark:bg-slate-800/50 rounded-3xl shadow-xl p-4 sm:p-6 overflow-y-auto max-h-[400px]"
+          >
+            <TransactionList
+              data={transactions}
+              onDelete={deleteTransaction}
+              onEdit={handleEdit}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="bg-white/90 dark:bg-slate-800/50 rounded-3xl shadow-xl p-4 sm:p-6"
+          >
+            <MonthlyChart data={transactions} />
+          </motion.div>
+        </section>
+      )}
+
+      <Toaster />
+    </main>
   );
 }
+
+
+
