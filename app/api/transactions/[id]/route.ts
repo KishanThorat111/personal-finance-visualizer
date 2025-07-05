@@ -31,23 +31,21 @@
 
 
 
-
-// app/api/transactions/[id]/route.ts
 import { connectDB } from '@/lib/mongo';
 import Transaction from '@/models/Transaction';
 import { NextRequest, NextResponse } from 'next/server';
 
-type Params = { params: { id: string } };
-
-export async function DELETE(request: NextRequest, context: Params) {
+export async function DELETE(request: NextRequest, context: any) {
   await connectDB();
-  await Transaction.findByIdAndDelete(context.params.id);
+  const id = context.params?.id;
+  await Transaction.findByIdAndDelete(id);
   return NextResponse.json({ success: true });
 }
 
-export async function PATCH(request: NextRequest, context: Params) {
+export async function PATCH(request: NextRequest, context: any) {
   await connectDB();
   const data = await request.json();
-  const updated = await Transaction.findByIdAndUpdate(context.params.id, data, { new: true });
+  const id = context.params?.id;
+  const updated = await Transaction.findByIdAndUpdate(id, data, { new: true });
   return NextResponse.json(updated);
 }
