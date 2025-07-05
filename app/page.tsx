@@ -60,6 +60,7 @@ export default function Home() {
   const updateTransaction = async (data: any) => {
     if (!editing) return;
     try {
+      // const res = await fetch(`/api/transactions/${editing._id}`, {
       const res = await fetch(`/api/transactions/${editing._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -79,6 +80,7 @@ export default function Home() {
 
   const deleteTransaction = async (id: string) => {
     try {
+      // const res = await fetch(`/api/transactions/${id}`, { method: 'DELETE' });
       const res = await fetch(`/api/transactions/${id}`, { method: 'DELETE' });
       if (res.ok) {
         toast('Transaction deleted');
