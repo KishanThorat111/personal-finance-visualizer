@@ -1,41 +1,167 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💸 Personal Finance Visualizer
 
-## Getting Started
+A modern, responsive full-stack web application to **track personal expenses**. Built with **Next.js 14**, **MongoDB**, **Tailwind CSS**, **shadcn/ui**, **Recharts**, and animated with **Framer Motion** — it offers a sleek interface to manage transactions and visualize spending.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+### ✅ Stage 1: Basic Transaction Tracking
+
+* ➕ Add / ✏️ Edit / ❌ Delete transactions (amount, date, description)
+* 📃 List view of recent transactions
+* 📊 Monthly expenses bar chart
+* ✅ Form validation with error states
+* 🌙 Dark mode + responsive UI
+* 🔔 Toast notifications using `sonner`
+
+> ✅ Fully functional and deployed live!
+
+---
+
+## 🌐 Live Demo
+
+🔗 [Live App on Vercel](https://personal-finance-visualizer.vercel.app)
+
+📦 [GitHub Repository](https://github.com/KishanThorat111/personal-finance-visualizer)
+
+---
+
+## 🧠 Tech Stack
+
+| Tech                | Usage                                    |
+| ------------------- | ---------------------------------------- |
+| **Next.js**         | Full-stack React framework               |
+| **MongoDB**         | NoSQL database with Mongoose ORM         |
+| **Tailwind CSS**    | Utility-first styling                    |
+| **shadcn/ui**       | Styled components with accessibility     |
+| **Framer Motion**   | Smooth component animations              |
+| **Recharts**        | Interactive charting for expense visuals |
+| **React Hook Form** | Simplified form handling + validation    |
+| **Lucide Icons**    | Clean icons for actions                  |
+| **Sonner**          | Toast notifications                      |
+
+---
+
+
+# 💸 Personal Finance Visualizer
+
+![License](https://img.shields.io/github/license/KishanThorat111/personal-finance-visualizer?style=flat-square)
+![Next.js](https://img.shields.io/badge/Built%20with-Next.js-000?logo=nextdotjs&style=flat-square)
+![Tailwind CSS](https://img.shields.io/badge/UI-TailwindCSS-06B6D4?logo=tailwindcss&logoColor=white&style=flat-square)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB-4EA94B?logo=mongodb&logoColor=white&style=flat-square)
+![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel&style=flat-square)
+![Stage](https://img.shields.io/badge/Stage-1-green?style=flat-square)
+
+A modern, responsive full-stack web application to **track personal expenses**. Built with **Next.js 14**, **MongoDB**, **Tailwind CSS**, **shadcn/ui**, **Recharts**, and animated with **Framer Motion** — it offers a sleek interface to manage transactions and visualize spending.
+
+
+### 🧾 Add & Edit Transactions
+
+![Transaction Form](https://i.imgur.com/YOUR_FORM_IMAGE.png)
+
+### 📜 Transaction List with Actions
+
+![Transaction List](https://i.imgur.com/YOUR_LIST_IMAGE.png)
+
+### 📊 Monthly Chart
+
+![Monthly Chart](https://i.imgur.com/YOUR_CHART_IMAGE.png)
+
+---
+
+## 🧩 Project Structure
+
+```
+personal-finance-visualizer/
+├── app/
+│   ├── api/
+│   │   └── transactions/route.ts       // POST + GET
+│   │   └── transactions/[id]/route.ts // PATCH + DELETE
+│   └── page.tsx                       // Dashboard
+├── components/
+│   ├── TransactionForm.tsx
+│   ├── TransactionList.tsx
+│   ├── MonthlyChart.tsx
+│   └── ui/toaster.tsx
+├── lib/mongo.ts
+├── models/Transaction.ts
+├── .env.local
+```
+
+---
+
+## ⚙️ Setup & Installation
+
+### ✅ Step 1: Clone the repo
+
+```bash
+git clone https://github.com/KishanThorat111/personal-finance-visualizer.git
+cd personal-finance-visualizer
+```
+
+### ✅ Step 2: Install dependencies
+
+```bash
+npm install
+```
+
+### ✅ Step 3: Setup MongoDB
+
+Create `.env.local` in the root:
+
+```env
+MONGODB_URI="your_mongodb_connection_string"
+```
+
+### ✅ Step 4: Run the app
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit: [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📅 Development Timeline & Commits
 
-## Learn More
+### Step-by-step commits:
 
-To learn more about Next.js, take a look at the following resources:
+````bash
+git commit -m "feat: initial project setup with Next.js, MongoDB, Tailwind"
+git commit -m "chore: install required libraries and setup shadcn/ui components"
+git commit -m "feat: setup MongoDB connection and Transaction model"
+git commit -m "feat: create API routes for CRUD transactions"
+git commit -m "feat: create transaction form component with react-hook-form"
+git commit -m "feat: create transaction list component with edit/delete actions"
+git commit -m "feat: add monthly bar chart visualization using Recharts"
+git commit -m "feat: build dashboard layout and integrate transaction features"\```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🧪 What's Next? (Stage 2 Preview)
 
-## Deploy on Vercel
+- 🧾 Category-based tagging
+- 🥧 Category-wise pie chart
+- 📊 Budget vs Actual insights
+- 💡 Dashboard cards (summary, most recent, top category)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-=======
-# personal-finance-visualizer
-A personal finance tracker built with Next.js, MongoDB, shadcn/ui, and Recharts.
->>>>>>> 98721ce9c9edc7f16e8535cea01c256ae049fd72
+## 📄 License
+
+MIT License © 2025 [Kishan Thorat](https://github.com/KishanThorat111)
+
+---
+
+## 🤝 Connect
+
+💼 [LinkedIn](https://linkedin.com/in/yourprofile)  
+💻 [GitHub](https://github.com/KishanThorat111)
+
+---
+
+> Built with ❤️ using Next.js, Tailwind, MongoDB, and Recharts
+
+````
