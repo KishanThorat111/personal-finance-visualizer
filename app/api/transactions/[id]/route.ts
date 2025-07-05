@@ -33,35 +33,21 @@
 
 
 // app/api/transactions/[id]/route.ts
-import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
+import { connectDB } from '@/lib/mongo';
+import Transaction from '@/models/Transaction';
+import { NextRequest, NextResponse } from 'next/server';
 
-import { connectDB } from "@/lib/mongo";
-import Transaction from "@/models/Transaction";
+type Params = { params: { id: string } };
 
-// DELETE /api/transactions/:id
-export async function DELETE(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest, context: Params) {
   await connectDB();
-  const { id } = context.params;
-  await Transaction.findByIdAndDelete(id);
-  return NextResponse.json({ message: "Deleted successfully" });
+  await Transaction.findByIdAndDelete(context.params.id);
+  return NextResponse.json({ success: true });
 }
 
-// PATCH /api/transactions/:id
-export async function PATCH(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+export async function PATCH(request: NextRequest, context: Params) {
   await connectDB();
-  const body = await request.json();
-  const { id } = context.params;
-
-  const updated = await Transaction.findByIdAndUpdate(id, body, {
-    new: true,
-  });
-
+  const data = await request.json();
+  const updated = await Transaction.findByIdAndUpdate(context.params.id, data, { new: true });
   return NextResponse.json(updated);
 }
