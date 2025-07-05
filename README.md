@@ -54,17 +54,12 @@ A modern, responsive full-stack web application to **track personal expenses**. 
 
 ### 🧾 Add & Edit Transactions
 
-![Transaction Form](https://i.imgur.com/YOUR_FORM_IMAGE.png)
 
 ### 📜 Transaction List with Actions
 
-![Transaction List](https://i.imgur.com/YOUR_LIST_IMAGE.png)
 
 ### 📊 Monthly Chart
 
-![Monthly Chart](https://i.imgur.com/YOUR_CHART_IMAGE.png)
-
----
 
 ## 🧩 Project Structure
 
